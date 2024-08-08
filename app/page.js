@@ -1,4 +1,4 @@
-'use client'
+'use client'// This is a special directive for Next.js to indicate that this component is a client-side component.
 import { Box, Stack, TextField,Button } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
@@ -10,28 +10,31 @@ export default function Home() {
   }]);
   const [message, setMessage] = useState('');
 
+  // This function is called when the user clicks the "Send" button.
   const sendMessage=async()=>{
-    setMessage('')
+    setMessage('')// Clear the input field after sending the message
     setMessages((messages)=>[
-      ...messages,
-      {role:"user",content:message},
-      {role:"assistant",content:''}
+      ...messages,// Keep all existing messages
+      {role:"user",content:message},// Add the user's message
+      {role:"assistant",content:''}// Prepare a blank message for the assistant's response
     ])
+// Send the user's message to the backend API to get a response from the assistant
     const response=fetch('/api/chat',{
       method:"POST",
       headers:{
-        'Content-Type':'application/json'
+        'Content-Type':'application/json'// Tell the server we're sending JSON data
       },
-      body:JSON.stringify([...messages,{role:'user',content:message}]),
+      body:JSON.stringify([...messages,{role:'user',content:message}]),// Send all messages including the new one
     }).then(async(res)=>{
-      const reader=res.body.getReader()
-      const decoder=new TextDecoder()
-
+      
+      const reader=res.body.getReader()// Get the response body as a readable stream
+      const decoder=new TextDecoder()// Decoder to convert the stream of bytes into text
       let result=' '
       return reader.read().then(function processText({done,value}){
         if(done){
           return result
         }
+        // Decode the incoming chunk of text
         const text=decoder.decode(value||new Int8Array(),{stream:true})
         setMessages((messages)=>{
           let lastMessage=messages[messages.length-1]
