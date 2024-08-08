@@ -23,10 +23,10 @@ Domain-Specific Guidance:
   obj.someMethod();
 `
 
-const async function POST(req){
+export async function POST(req){
     const openai=new OpenAI()
     const data=await req.json()
-
+    //completion of responses
     const completion=await openai.chat.completions.create({
         messages:[{
             role:'system',content:systemPrompt
@@ -36,6 +36,7 @@ const async function POST(req){
     model:'gpt-4o-mini',
     stream:true,
     })
+    //Streaming the responses
     const stream=new ReadableStream({
         async start(controller){
             const encoder= new TextEncoder()
@@ -57,4 +58,6 @@ const async function POST(req){
 
         },
     })
+    //returning the responses
+    return new NextResponse(stream)
 }
