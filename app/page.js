@@ -2,6 +2,7 @@
 import { Box, Stack, TextField,Button } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
+import ReactMarkdown from 'react-markdown';
 
 export default function Home() {
   const [messages, setMessages] = useState([{
@@ -82,12 +83,12 @@ export default function Home() {
               justifyContent={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
             >
               <Box
-                bgcolor={message.role === 'assistant' ? 'primary.main' : 'secondary.main'}
+                bgcolor={message.role === 'assistant' ? '#546e7a':'#26a69a' }
                 color="white"
                 borderRadius={16}
                 p={3}
               >
-                {message.content}
+               <ReactMarkdown>{message.content}</ReactMarkdown>
               </Box>
             </Box>
           ))}
