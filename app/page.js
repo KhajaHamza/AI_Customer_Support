@@ -88,6 +88,7 @@ export default function Home() {
                 borderRadius={16}
                 p={3}
               >
+                //Imported component to make the content output streamed and uncluttered
                <ReactMarkdown>{message.content}</ReactMarkdown>
               </Box>
             </Box>
