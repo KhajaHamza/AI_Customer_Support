@@ -86,7 +86,7 @@ export default function Home() {
                 bgcolor={message.role === 'assistant' ? '#546e7a':'#26a69a' }
                 color="white"
                 borderRadius={16}
-                p={3}
+                p={3}//Padding inside the box is set to 3 (theme spacing unit)
               >
                 //Imported component to make the content output streamed and uncluttered
                <ReactMarkdown>{message.content}</ReactMarkdown>
@@ -99,7 +99,8 @@ export default function Home() {
           label="message"
           fullWidth
           value={message}
-          onChange={(e)=>setMessage(e.target.value)}/>
+          onChange={(e)=>setMessage(e.target.value)}//'onClick' is an event handler that triggers the 'sendMessage' function when the button is clicked.
+    onClick={sendMessage}/>
           <Button variant="contained" onClick={sendMessage}>Send</Button>
 
         </Stack>
