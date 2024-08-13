@@ -1,5 +1,5 @@
 'use client'// This is a special directive for Next.js to indicate that this component is a client-side component.
-import { Box, Stack, TextField,Button } from "@mui/material";
+import { Box, Stack, TextField,Button,Typography } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
 import ReactMarkdown from 'react-markdown';
@@ -52,59 +52,72 @@ export default function Home() {
       })
     })
   }
-  return (
-    <Box
-      width="100vw"
-      height="100vh"
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Stack
-        direction="column"
-        width="600px"
-        height="700px"
-        border="1px solid black"
-        p={2}
-        spacing={3}
-      >
-        <Stack
-          direction="column"
-          spacing={2}
-          flexGrow={1}
-          overflow="auto"
-          maxHeight="100%"
-        >
-          {messages.map((message, index) => (
-            <Box
-              key={index}
-              display="flex"
-              justifyContent={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
-            >
-              <Box
-                bgcolor={message.role === 'assistant' ? '#546e7a':'#26a69a' }
-                color="white"
-                borderRadius={16}
-                p={3}//Padding inside the box is set to 3 (theme spacing unit)
-              >
-                //Imported component to make the content output streamed and uncluttered
-               <ReactMarkdown>{message.content}</ReactMarkdown>
-              </Box>
-            </Box>
-          ))}
-        </Stack>
-        <Stack direction="row" spacing={2}>
-          <TextField 
-          label="message"
-          fullWidth
-          value={message}
-          onChange={(e)=>setMessage(e.target.value)}//'onClick' is an event handler that triggers the 'sendMessage' function when the button is clicked.
-    onClick={sendMessage}/>
-          <Button variant="contained" onClick={sendMessage}>Send</Button>
+  return( <Box
+  width="100vw"
+  height="100vh"
+  display="flex"
+  flexDirection="column"
+  justifyContent="center"
+  alignItems="center"
+  sx={{ backgroundColor: '#e3f2fd' }} // Light blue background color
+>
+  
+  <Typography //Engineering Logo
+    variant="h4"
+    sx={{
+      color: '#1e88e5', // Darker blue for logo text
+      mb: 2, // Margin bottom to separate from chatbox
+      fontWeight: 'bold',
+    }}
+  >
+    EngineerEase
+  </Typography>
 
-        </Stack>
-      </Stack>
-    </Box>
-  );
+  <Stack
+    direction="column"
+    width="600px"
+    height="700px"
+    border="1px solid #1e88e5" // Border color matching the logo
+    p={2}
+    spacing={3}
+    sx={{ backgroundColor: '#ffffff' }}
+  >
+    <Stack
+      direction="column"
+      spacing={2}
+      flexGrow={1}
+      overflow="auto"
+      maxHeight="100%"
+    >
+      {messages.map((message, index) => (
+        <Box
+          key={index}
+          display="flex"
+          justifyContent={message.role === 'assistant' ? 'flex-start' : 'flex-end'}
+        >
+          <Box
+            bgcolor={message.role === 'assistant' ? '#546e7a' : '#1e88e5'} // Grey for assistant, blue for user
+            color="white"
+            borderRadius={16}
+            p={3} // Padding inside the box is set to 3 (theme spacing unit)
+          >
+            <ReactMarkdown>{message.content}</ReactMarkdown>
+          </Box>
+        </Box>
+      ))}
+    </Stack>
+    <Stack direction="row" spacing={2}>
+      <TextField 
+        label="Message"
+        fullWidth
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      <Button variant="contained" color="primary" onClick={sendMessage}>
+        Send
+      </Button>
+    </Stack>
+  </Stack>
+</Box>
+);
 }
